@@ -4,12 +4,11 @@
 #define SSID "WIFI_SSID"
 #define PASS "WIFI_PASSWORD"
 
-int pin = D3;
+int pin = D1;
 ESP8266WebServer webserver(80);
-string secret = "someSecretPhrase"
 
 void unlock(){
-    if(webserver.hasArg(secret)){
+    if(webserver.hasArg("secretPhrase")){
       digitalWrite(pin,HIGH);
       delay(1750);
       digitalWrite(pin,LOW);
@@ -20,8 +19,6 @@ void unlock(){
 void setup() {
   pinMode(pin, OUTPUT);
   digitalWrite(pin, LOW);
-  Serial.begin(115200);
-  Serial.println();
 
   WiFi.begin(SSID,PASS);
   while (WiFi.status() != WL_CONNECTED)
@@ -29,10 +26,6 @@ void setup() {
     delay(100);
     Serial.print(".");
   }
-
-  Serial.println();
-  Serial.print("Connected! IP address: ");
-  Serial.println(WiFi.localIP());
   
   // to unlock door, goto http://ipaddress/unlock?secretPhrase
   webserver.on("/unlock", unlock);
