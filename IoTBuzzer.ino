@@ -4,17 +4,17 @@
 #define SSID "WIFI_SSID"
 #define PASS "WIFI_PASSWORD"
 
-const pin = D5;
+int pin = D3;
 ESP8266WebServer webserver(80);
-const secret = "someSecretPhrase"
+string secret = "someSecretPhrase"
 
 void unlock(){
     if(webserver.hasArg(secret)){
       digitalWrite(pin,HIGH);
-      delay(1000);
+      delay(1750);
       digitalWrite(pin,LOW);
     }
-  webserver.send(200, "text/html", "Not found: /return"); 
+  webserver.send(200, "text/html", "Door has been opened (?)"); 
 }
 
 void setup() {
